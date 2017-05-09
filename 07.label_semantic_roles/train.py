@@ -137,6 +137,11 @@ def main():
         label=target,
         param_attr=paddle.attr.Param(name='crfw'))
     evaluator.sum(input=crf_dec)
+    evaluator.chunk(
+        input=crf_dec,
+        label=target,
+        chunk_scheme="IOB",
+        num_chunk_types=label_dict_len / 2)
 
     # create parameters
     parameters = paddle.parameters.create(crf_cost)
